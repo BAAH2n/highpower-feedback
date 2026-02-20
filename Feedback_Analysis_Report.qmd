@@ -45,40 +45,15 @@ library(ragg)
 is_html <- knitr::is_html_output()
 if (is_html) library(kableExtra)
 
-# --- Завантаження даних (відповідає Main.R) ---
+# --- Завантаження готових результатів з Main.R ---
+ideas <- read_delim("output/ideas.csv", delim = ";", show_col_types = FALSE)
+top5  <- read_delim("output/top_5_ideas.csv", delim = ";", show_col_types = FALSE)
+bugs  <- read_delim("output/bugs_report.csv", delim = ";", show_col_types = FALSE)
+
+# Для підрахунку загальної статистики
 categorised_feedback <- readxl::read_excel("data/Feedback_Classified.xlsx", sheet = 1) |>
   janitor::clean_names() |>
-  mutate(
-    user_id = as.numeric(user_id),
-    date = lubridate::parse_date_time(date, orders = c("mdy_HMS", "dmy_HMS", "dmy", "mdy"))
-  )
-
-user_status <- read_csv("data/user_status.csv", show_col_types = FALSE) |>
-  select(c(1, 2, 3)) |>
-  janitor::clean_names() |>
-  filter(!is.na(meta_user_id))
-
-idea_legend <- readxl::read_excel("data/Idea_Dictionary.xlsx") |>
-  janitor::clean_names()
-
-# --- Об'єднання та підрахунок (логіка з Main.R) ---
-joined_tb <- left_join(categorised_feedback, user_status, join_by(user_id == meta_user_id))
-
-ideas <- joined_tb |>
-  filter(!str_detect(category, "5")) |>
-  select(code, date, user_id) |>
-  group_by(code) |>
-  summarise(number_of_mentions = n()) |>
-  left_join(x = _, idea_legend, join_by(code == code))
-
-top5 <- ideas |>
-  filter(!str_detect(code, "1.1")) |>
-  arrange(desc(number_of_mentions)) |>
-  head(5)
-
-bugs <- ideas |>
-  filter(str_detect(code, "1.1")) |>
-  arrange(desc(number_of_mentions))
+  mutate(user_id = as.numeric(user_id))
 ```
 
 ## Огляд {.unnumbered}
