@@ -126,7 +126,7 @@ background: #1B3A5C;
   <li><a href="#повільні-відповіді-радників-35-хв" id="toc-повільні-відповіді-радників-35-хв" class="nav-link" data-scroll-target="#повільні-відповіді-радників-35-хв">2. Повільні відповіді радників (3–5+ хв)</a></li>
   <li><a href="#нечіткі-загальні-розмиті-відповіді" id="toc-нечіткі-загальні-розмиті-відповіді" class="nav-link" data-scroll-target="#нечіткі-загальні-розмиті-відповіді">3. Нечіткі / загальні / розмиті відповіді</a></li>
   <li><a href="#copy-paste-функціональність" id="toc-copy-paste-функціональність" class="nav-link" data-scroll-target="#copy-paste-функціональність">4. Copy-paste функціональність</a></li>
-  <li><a href="#невідповідні-відповіді-off-topic" id="toc-невідповідні-відповіді-off-topic" class="nav-link" data-scroll-target="#невідповідні-відповіді-off-topic">5. Невідповідні відповіді / off-topic</a></li>
+  <li><a href="#непорозумілість-у-питаннях-користувача-off-topic" id="toc-непорозумілість-у-питаннях-користувача-off-topic" class="nav-link" data-scroll-target="#непорозумілість-у-питаннях-користувача-off-topic">5. Непорозумілість у питаннях користувача / off-topic</a></li>
   <li><a href="#візуалізація-топ-5" id="toc-візуалізація-топ-5" class="nav-link" data-scroll-target="#візуалізація-топ-5">Візуалізація топ-5</a></li>
   </ul></li>
   <li><a href="#баг-репорт" id="toc-баг-репорт" class="nav-link" data-scroll-target="#баг-репорт">Баг-репорт</a></li>
@@ -240,7 +240,7 @@ background: #1B3A5C;
 </div>
 </div>
 </div>
-<p>Радники відповідають занадто повільно — 3–5+ хвилин між повідомленнями. Користувачі відчувають, що їхні кредити горять на очікуванні, а не на фактичну консультацію.</p>
+<p>Експерти відповідають занадто повільно — 3–5+ хвилин між повідомленнями. Користувачі відчувають, що їхні кредити горять на очікуванні, а не на фактичну консультацію.</p>
 <blockquote class="blockquote">
 <p><em>“Some of them take more than 3–4 mins to reply. Sometimes advisors don’t give direct answers and try to extend the time as much as possible.”</em></p>
 </blockquote>
@@ -282,8 +282,8 @@ background: #1B3A5C;
 </blockquote>
 <hr>
 </section>
-<section id="невідповідні-відповіді-off-topic" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="невідповідні-відповіді-off-topic">5. Невідповідні відповіді / off-topic</h3>
+<section id="непорозумілість-у-питаннях-користувача-off-topic" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="непорозумілість-у-питаннях-користувача-off-topic">5. Непорозумілість у питаннях користувача / off-topic</h3>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -294,7 +294,7 @@ background: #1B3A5C;
 </div>
 </div>
 </div>
-<p>Радник не відповідає на конкретне питання, відхиляється від теми або перепитує те, що вже було сказано. Користувач витрачає кредити, але не отримує відповіді на своє запитання.</p>
+<p>Експерт не розуміє суті питання, яке було закладено користувачем, через неправильний виклад думок чи перенавантаження запитом. Через що, витрачаються кредити заради уточнення.</p>
 <blockquote class="blockquote">
 <p><em>“Readers don’t read my intentionally clarified needs and my questions clearly at all and keep giving wrong and unreliable answers.”</em></p>
 </blockquote>
@@ -517,42 +517,40 @@ Figure&nbsp;2: Технічні баги за кількістю згадок
 <div class="cell">
 <details class="code-fold">
 <summary>Показати код</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>all_plot <span class="ot">&lt;-</span> ideas <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">idea_label =</span> <span class="fu">str_wrap</span>(<span class="fu">paste0</span>(code, <span class="st">" — "</span>, idea), <span class="at">width =</span> <span class="dv">45</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">idea_label =</span> <span class="fu">fct_reorder</span>(idea_label, number_of_mentions),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">case_when</span>(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"1</span><span class="sc">\\</span><span class="st">.1"</span>) <span class="sc">~</span> <span class="st">"Баги"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"1</span><span class="sc">\\</span><span class="st">.2"</span>) <span class="sc">~</span> <span class="st">"Feature Requests (UX)"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"1</span><span class="sc">\\</span><span class="st">.3"</span>) <span class="sc">~</span> <span class="st">"Credit/Timer System"</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.1"</span>) <span class="sc">~</span> <span class="st">"Якість відповідей"</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.2"</span>) <span class="sc">~</span> <span class="st">"Точність рідінгів"</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.3"</span>) <span class="sc">~</span> <span class="st">"Професійність"</span>,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.4"</span>) <span class="sc">~</span> <span class="st">"AI-підозри"</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"3"</span>) <span class="sc">~</span> <span class="st">"Ціни та оплата"</span>,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"4"</span>) <span class="sc">~</span> <span class="st">"Приватність та безпека"</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Інше"</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_plot, <span class="fu">aes</span>(<span class="at">x =</span> number_of_mentions, <span class="at">y =</span> idea_label, <span class="at">fill =</span> category)) <span class="sc">+</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> number_of_mentions), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.12</span>))) <span class="sc">+</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>, <span class="at">name =</span> <span class="st">"Категорія"</span>) <span class="sc">+</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Кількість згадок"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>category_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1. Product / Engineering"</span>       <span class="ot">=</span> <span class="st">"#2E86C1"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2. Supply / Advisor Operations"</span>  <span class="ot">=</span> <span class="st">"#E67E22"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3. Monetization / Business"</span>      <span class="ot">=</span> <span class="st">"#27AE60"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"4. Trust &amp; Safety"</span>               <span class="ot">=</span> <span class="st">"#8E44AD"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>all_plot <span class="ot">&lt;-</span> ideas <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">idea_label =</span> <span class="fu">str_wrap</span>(<span class="fu">paste0</span>(code, <span class="st">" — "</span>, idea), <span class="at">width =</span> <span class="dv">45</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">idea_label =</span> <span class="fu">fct_reorder</span>(idea_label, number_of_mentions),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">case_when</span>(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"1"</span>) <span class="sc">~</span> <span class="st">"1. Product / Engineering"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2"</span>) <span class="sc">~</span> <span class="st">"2. Supply / Advisor Operations"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"3"</span>) <span class="sc">~</span> <span class="st">"3. Monetization / Business"</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"4"</span>) <span class="sc">~</span> <span class="st">"4. Trust &amp; Safety"</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Інше"</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_plot, <span class="fu">aes</span>(<span class="at">x =</span> number_of_mentions, <span class="at">y =</span> idea_label, <span class="at">fill =</span> category)) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> number_of_mentions), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.12</span>))) <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> category_colors, <span class="at">name =</span> <span class="st">"Категорія"</span>) <span class="sc">+</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Кількість згадок"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Set2 is 8
-Returning the palette you asked for with that many colors</code></pre>
-</div>
 <div class="cell-output-display">
 <div id="fig-all-ideas" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">

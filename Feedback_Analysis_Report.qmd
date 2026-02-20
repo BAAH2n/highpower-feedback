@@ -132,7 +132,7 @@ total_bug_mentions <- sum(bugs$number_of_mentions)
 **Код:** `2.1.a` · **Згадок: 23**
 :::
 
-Радники відповідають занадто повільно — 3–5+ хвилин між повідомленнями. Користувачі відчувають, що їхні кредити горять на очікуванні, а не на фактичну консультацію.
+Експерти відповідають занадто повільно — 3–5+ хвилин між повідомленнями. Користувачі відчувають, що їхні кредити горять на очікуванні, а не на фактичну консультацію.
 
 > *"Some of them take more than 3–4 mins to reply. Sometimes advisors don't give direct answers and try to extend the time as much as possible."*
 
@@ -162,13 +162,13 @@ total_bug_mentions <- sum(bugs$number_of_mentions)
 
 ---
 
-### 5. Невідповідні відповіді / off-topic {.unnumbered}
+### 5. Непорозумілість у питаннях користувача / off-topic {.unnumbered}
 
 ::: {.callout-tip appearance="minimal" icon=false}
 **Код:** `2.1.c` · **Згадок: 10**
 :::
 
-Радник не відповідає на конкретне питання, відхиляється від теми або перепитує те, що вже було сказано. Користувач витрачає кредити, але не отримує відповіді на своє запитання.
+Експерт не розуміє суті питання, яке було закладено користувачем, через неправильний виклад думок чи перенавантаження запитом. Через що, витрачаються кредити заради уточнення.
 
 > *"Readers don't read my intentionally clarified needs and my questions clearly at all and keep giving wrong and unreliable answers."*
 
@@ -284,20 +284,22 @@ bugs |>
 #| fig-height: 14
 #| fig-width: 9
 
+category_colors <- c(
+  "1. Product / Engineering"       = "#2E86C1",
+  "2. Supply / Advisor Operations"  = "#E67E22",
+  "3. Monetization / Business"      = "#27AE60",
+  "4. Trust & Safety"               = "#8E44AD"
+)
+
 all_plot <- ideas |>
   mutate(
     idea_label = str_wrap(paste0(code, " — ", idea), width = 45),
     idea_label = fct_reorder(idea_label, number_of_mentions),
     category = case_when(
-      str_starts(code, "1\\.1") ~ "Баги",
-      str_starts(code, "1\\.2") ~ "Feature Requests (UX)",
-      str_starts(code, "1\\.3") ~ "Credit/Timer System",
-      str_starts(code, "2\\.1") ~ "Якість відповідей",
-      str_starts(code, "2\\.2") ~ "Точність рідінгів",
-      str_starts(code, "2\\.3") ~ "Професійність",
-      str_starts(code, "2\\.4") ~ "AI-підозри",
-      str_starts(code, "3") ~ "Ціни та оплата",
-      str_starts(code, "4") ~ "Приватність та безпека",
+      str_starts(code, "1") ~ "1. Product / Engineering",
+      str_starts(code, "2") ~ "2. Supply / Advisor Operations",
+      str_starts(code, "3") ~ "3. Monetization / Business",
+      str_starts(code, "4") ~ "4. Trust & Safety",
       TRUE ~ "Інше"
     )
   )
@@ -306,7 +308,7 @@ ggplot(all_plot, aes(x = number_of_mentions, y = idea_label, fill = category)) +
   geom_col() +
   geom_text(aes(label = number_of_mentions), hjust = -0.2, size = 3) +
   scale_x_continuous(expand = expansion(mult = c(0, 0.12))) +
-  scale_fill_brewer(palette = "Set2", name = "Категорія") +
+  scale_fill_manual(values = category_colors, name = "Категорія") +
   labs(x = "Кількість згадок", y = NULL) +
   theme_minimal(base_size = 11) +
   theme(
