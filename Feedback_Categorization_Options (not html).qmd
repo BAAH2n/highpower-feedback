@@ -1,0 +1,484 @@
+---
+title: "Customer Feedback: Categorization Options"
+subtitle: "High-Value Users — Operations Demand Team"
+lang: uk
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    toc-title: "Зміст"
+    number-sections: false
+    smooth-scroll: true
+    mainfont: "Segoe UI"
+    fontsize: "1rem"
+    linestretch: 1.6
+    title-block-banner: "#1B3A5C"
+    title-block-banner-color: white
+  pdf:
+    documentclass: scrreprt
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    mainfont: "Arial"
+    fontsize: 11pt
+    geometry:
+      - top=25mm
+      - left=25mm
+      - right=25mm
+      - bottom=25mm
+    colorlinks: true
+    linkcolor: "blue"
+---
+
+## Огляд {.unnumbered}
+
+::: {.callout-note appearance="minimal"}
+Цей документ представляє **4 варіанти категоризації** зворотного зв'язку від найбільш активних (high-value) користувачів платформи.
+
+Кожна підкатегорія супроводжується реальною цитатою користувача, що найкраще ілюструє її суть.
+:::
+
+| Варіант | Підхід | Категорій | Підкатегорій |
+|---------|--------|:---------:|:------------:|
+| **A — Broad Categorization** | 5 широких тем для executive overview | 5 | — |
+| **B — Medium Detail** | Ті ж 5 тем + гранулярні підкатегорії | 5 | 19 |
+| **C — By Responsible Team** | За командою, що відповідає за вирішення | 4 | 13 |
+| **D — By Customer Journey** | За етапом користувацького шляху | 5 | 21 |
+
+: Порівняльна таблиця варіантів {.striped .hover}
+
+---
+
+## Variant A — Broad Categorization
+
+::: {.callout-tip appearance="simple" icon=false}
+**Підхід:** Простий розподіл на 5 великих тем. Найкраще підходить для швидкого executive overview та початкової пріоритизації. Кожен фідбек потрапляє рівно в одну категорію.
+:::
+
+### 1. Technical Issues
+
+Усі технічні проблеми: баги, глітчі, краші додатку, проблеми з підключенням, втрата кредитів через технічні збої.
+
+> *"Constant connection issues. Credits vaporizing. Huge delays in replies."*
+
+### 2. Feature Requests
+
+Запити на нові або покращені функції — від copy-paste до системи бронювання та голосових повідомлень.
+
+> *"In future, I think it will be great of having a 'star message' function, similar to WhatsApp that we could 'star' a specific message to read it later, or a search function to put in keywords and able to search for chat record related to those keywords."*
+
+### 3. Advisor Quality
+
+Скарги на якість рідінгів, швидкість відповідей, точність прогнозів, мовний бар'єр та професійність радників.
+
+> *"There are a lot of psychics that took a long time to answer and the answer after long time like yes and no without further more information. We need the quick and precise answer."*
+
+### 4. Pricing & Billing
+
+Усе про ціноутворення: вартість кредитів, автоматичні списання, бажання підписки, некоректні транзакції.
+
+> *"I just bought some credits and specified the card I wanted to use, and then it bumped me up to $99.90 without my consent AGAIN and used my main account which I didn't want money deducted from!"*
+
+### 5. Privacy & Account Management
+
+Видалення чатів, видалення збережених карток, конфіденційність особистих даних.
+
+> *"I was never able to delete the Chats from the Account and they were read by someone else. A breach of very private Information. One should be able to delete Chat history which was never an Option."*
+
+---
+
+## Variant B — Medium Detail
+
+::: {.callout-tip appearance="simple" icon=false}
+**Підхід:** Ті ж п'ять тем, що й у Variant A, але з гранулярними підкатегоріями всередині кожної. Дозволяє маршрутизувати проблеми до конкретних команд, зберігаючи просту верхню структуру. Усього **19 підкатегорій**.
+:::
+
+### 1. Technical Issues
+
+#### 1.1 Connection & Chat Stability
+
+Дропи з'єднання, фрізи чату, краші додатку, автоматичний вихід із сесії під час розмови.
+
+> *"Sometimes glitches, it froze, it kicked me out of chats and the worst of all, sometimes it keeps loading and doesn't allow me to access my chats. So it makes me lose credits and I can't even see the advisors answers."*
+
+#### 1.2 Queue & "Chat Next" System
+
+Неточний таймер черги, втрата місця, невідповідність статусів online/busy реальній доступності радника.
+
+> *"There is a problem with the software. When I try to reach the psychics and they are busy, it says you will be connected in 4 minutes and then waiting and it says 1 minute. But it takes 1 or 1.5 hours to wait and at last I didn't reach them because they are offline."*
+
+#### 1.3 Credit Deduction Bugs
+
+Списання кредитів без фактичного підключення до радника — гроші зникають через технічні збої.
+
+> *"Chat had many glitches where the line up to chat for an astrologer would take funds from the account even though the chat was not connected."*
+
+#### 1.4 Notification Issues
+
+Нотифікації не приходять або приходять із затримкою, через що користувачі пропускають доступність радника.
+
+> *"It may be my phone but I don't get notifications from the app or email or text when our favorites are online. But I do love that it shows their schedules."*
+
+### 2. Feature Requests
+
+#### 2.1 Chat UX
+
+Copy-paste, пошук по повідомленнях, star/pin повідомлень, скачування історії чату, надсилання фото, голосові повідомлення.
+
+> *"Copy and paste in chat!! ...It's tiring to type… copy paste does not work… would be useful to share and delete pictures."*
+
+#### 2.2 Advisor Discovery & Booking
+
+Пошук психіка за ім'ям, бронювання конкретного часового слоту, відображення out-of-office статусу.
+
+> *"It would be really amazing if a booking system feature existed — then I KNOW I actually have a session rather than 'maybe'…"*
+
+#### 2.3 Account & Profile
+
+Фото профілю для користувачів, видалення чатів (а не лише архівування), блокування небажаних радників, видалення збережених карток, об'єднання акаунтів.
+
+> *"I want to add a profile picture for myself. Wish we could do that. We can see our psychic's face, wish they could see ours."*
+
+#### 2.4 Credit & Session Visibility
+
+Відображення залишку кредитів/часу під час сесії, трекінг витрат та покупок, попередження перед закінченням кредитів.
+
+> *"I hate the way the chat just abruptly interrupts the meeting without warning. There's no clock to show the balance of minutes. It just cuts you off."*
+
+### 3. Advisor Quality
+
+#### 3.1 Response Speed
+
+Повільні відповіді (3–5 хвилин між повідомленнями), короткі одно-двослівні відповіді, навмисне затягування часу.
+
+> *"Some of them take more than 3–4 mins to reply. Sometimes advisors don't give direct answers and try to extend the time as much as possible."*
+
+#### 3.2 Reading Quality
+
+Нечіткі, загальні відповіді, які не відповідають на конкретне питання. Повторення одного й того ж без нової інформації.
+
+> *"Vague replies. Very vague statement over and over. Not detailed."*
+
+#### 3.3 Accuracy & Predictions
+
+Неточні прогнози, які не збуваються. Суперечливі рідінги від різних радників щодо однієї ситуації.
+
+> *"None of the predictions worked out. I was always waiting for something to happen and when it didn't, some story was made."*
+
+#### 3.4 Professionalism & Conduct
+
+Грубість, scare tactics для стимуляції витрат, спам-повідомлення, підозра на AI/ChatGPT-відповіді, недоречні звертання.
+
+> *"I've had a few bad experiences with advisors. Using scare tactics and negative messages to get me to chat and spend money."*
+
+#### 3.5 Language Barrier
+
+Погана англійська у радників, незрозумілі або некогерентні відповіді через мовний бар'єр.
+
+> *"I had one situation where the individual could not speak my native tongue English very well and the answers I got were not comprehensive nor coherent."*
+
+### 4. Pricing & Billing
+
+#### 4.1 Perceived Value / Cost
+
+Загальне відчуття "занадто дорого", таймер рахує занадто швидко, вартість не відповідає отриманій цінності.
+
+> *"It's very very expensive and the timer is questionable (the minutes are counted down too fast sometimes, you feel a bit cheated)."*
+
+#### 4.2 Payment Flexibility
+
+Бажання кастомних сум поповнення, підписної моделі з безлімітним доступом, tiered loyalty-програми.
+
+> *"Is there a way to refill credits with a custom amount rather than the presets? Banks also don't like seeing the repeated transactions of the same amount and flag it."*
+
+#### 4.3 Unauthorized / Unexpected Charges
+
+Автоматичне списання без підтвердження, некоректна дефолтна сума при поповненні, використання невірної картки.
+
+> *"When you run low on credits, it wants me to pay another $9.99. It would be helpful if it didn't automatically default to the last amount paid and let me choose."*
+
+### 5. Privacy & Data Control
+
+#### 5.1 Chat Deletion
+
+Можливість лише архівувати чати, але не видаляти їх назавжди. Архівовані радники продовжують надсилати повідомлення.
+
+> *"Why can't I completely delete chats I've had with some psychics? I can only archive them. I should have the option to permanently delete chats I don't want."*
+
+#### 5.2 Payment Data
+
+Неможливо видалити збережені банківські картки з акаунту — можна лише додавати нові.
+
+> *"There must be a way to remove the extra credit cards on the account. I should be able to take out information I don't want on the file anymore."*
+
+#### 5.3 Anonymity & Confidentiality
+
+Порівняння з конкурентами, де можна залишатись анонімним, платити через Apple Pay, видаляти чати.
+
+> *"It's anonymous, no account needed and there's an option to delete the chat. Payment can be made by Apple so there's privacy with the bank."*
+
+---
+
+## Variant C — By Responsible Team
+
+::: {.callout-tip appearance="simple" icon=false}
+**Підхід:** Організовано за командою, яка відповідає за вирішення. Ідеально для крос-функціональної пріоритизації та призначення ownership прямо з цього звіту. **4 напрямки, 13 підкатегорій.**
+:::
+
+### 1. Product / Engineering
+
+#### 1.1 Bugs & Stability
+
+Краші додатку, фрізи чату, збої черги, проблеми з підключенням, втрата кредитів через баги.
+
+> *"Quite regularly, the platform has lags, all the messages come at once, or the queue does not work."*
+
+#### 1.2 New Features (Chat UX, Booking, Profile, Search)
+
+Нова функціональність: copy-paste, пошук по чатах і радниках, бронювання, фото профілю, голосові повідомлення.
+
+> *"Being able to search for a psychic by his name. Being able to copy what we have wrote in the chat. That would make your clients' interaction easier and probably more frequent."*
+
+#### 1.3 Credit / Timer System Improvements
+
+Відображення балансу під час сесії, попередження про закінчення кредитів, прозорість тарифікації.
+
+> *"Show how many credits are left on account while in session. Being able to delete a reading so you don't get unnecessary solicitations from advisors you no longer wish to speak to."*
+
+### 2. Supply / Advisor Operations
+
+#### 2.1 Response Speed & Engagement Quality
+
+Повільні відповіді, одно-двослівні відповіді, незавершені сесії коли закінчуються кредити.
+
+> *"Sometimes when my time is running out but I have one last question, you can see the counselor typing but won't send the response because the money has run out. Why can't they just finish the last question?"*
+
+#### 2.2 Accuracy & Consistency
+
+Прогнози, що не збуваються. Різні радники дають протилежні відповіді на те саме питання.
+
+> *"Conflicting readings. Different answers from advisers. There's a lot of conflicting information and when things don't occur as predicted — an excuse."*
+
+#### 2.3 Professionalism & Language
+
+Поведінка та комунікація радників: тон спілкування, мовні навички, доречність звертань.
+
+> *"The psychics should also stop using words like 'sweetie, sweetheart, darling, honey' when addressing the clients... it feels cheap and very disingenuous."*
+
+#### 2.4 AI / Bot Suspicion
+
+Користувачі підозрюють, що замість живого радника їм відповідає ChatGPT або автоматизований бот.
+
+> *"I occasionally had a feeling that it was chatGPT answering not a real person."*
+
+### 3. Monetization / Business
+
+#### 3.1 Subscription & Loyalty Programs
+
+Бажання місячної підписки, loyalty-tiers, зарезервованих слотів із улюбленим радником.
+
+> *"If you guys end up having a package where you can pick one psychic and reserve a spot with them weekly or monthly, I'd be so in!"*
+
+#### 3.2 Payment Flexibility
+
+Кастомні суми поповнення, більше варіантів оплати, можливість керувати збереженими картками.
+
+> *"I would love to have a certain daily limit or unlimited usage for a monthly fee. I am sure your regular customers would love the benefits."*
+
+#### 3.3 Credit Transparency
+
+Трекінг витрат, історія покупок, можливість перевірити списання з картки.
+
+> *"Being able to track conversation token totals and purchases... there is no place to double check against CC charges."*
+
+### 4. Trust & Safety
+
+#### 4.1 Privacy & Data Deletion
+
+Видалення історії чатів, видалення платіжних даних, загальна приватність користувача.
+
+> *"It makes me uncomfortable that I cannot delete chats or get rid of psychics from my profile."*
+
+#### 4.2 Scare Tactics & Manipulative Behavior
+
+Радники використовують залякування та негатив для стимуляції витрат.
+
+> *"I've had a few bad experiences with advisors. Using scare tactics and negative messages to get me to chat and spend money. I've learned to ignore them."*
+
+#### 4.3 Unwanted Contact from Advisors
+
+Спам-повідомлення від радників, з якими користувач більше не хоче спілкуватись. Неможливість їх заблокувати.
+
+> *"I have too many chats and psychics who keep writing to me and I am not interested. Even if they are archived they keep sending messages I do not want to receive."*
+
+---
+
+## Variant D — By Customer Journey Stage
+
+::: {.callout-tip appearance="simple" icon=false}
+**Підхід:** Організовано за етапом користувацького шляху, на якому виникає проблема. Допомагає визначити, який етап досвіду "витікає" найбільше цінності та потребує першочергової уваги. **5 етапів, 21 підкатегорія.**
+:::
+
+### 1. Discovery & Selection
+
+::: {.callout-note appearance="minimal" icon=false}
+📍 Етап, коли користувач шукає та обирає радника для сесії.
+:::
+
+#### 1.1 No Search by Name
+
+Немає можливості швидко знайти улюбленого радника — треба прокручувати довгий список.
+
+> *"Another recommendation: it would be great if you could search a psychic easily by name. Now you have to scroll so many and can only see them if online and not in chat."*
+
+#### 1.2 Hard to Assess Availability
+
+Незрозуміло, чи доступний радник. Немає out-of-office статусу, статуси online/busy не відповідають дійсності.
+
+> *"Would it be a thing to consider like an 'out of office' for your astrologers? When you have a favorite person who's guiding you for quite some time, it might be helpful."*
+
+#### 1.3 Difficult to Find Quality
+
+Складно відрізнити якісного радника від некомпетентного до початку (і витрати грошей на) сесії.
+
+> *"Difficult to find the good medium. Some mediums are much more competent than others."*
+
+### 2. Queue & Connection
+
+::: {.callout-note appearance="minimal" icon=false}
+📍 Етап, коли користувач намагається підключитись до обраного радника.
+:::
+
+#### 2.1 "Chat Next" Unreliable
+
+Непередбачуваний час очікування в черзі, втрата місця, неточний зворотний відлік.
+
+> *"I can't stand it when you say 4 minutes and it counts down to 1 minute. I have waited an hour after that 2 minutes before anyone came online."*
+
+#### 2.2 No Booking System
+
+Неможливо заздалегідь забронювати час із конкретним радником — лише "хто перший, той і зайняв".
+
+> *"My point is, it would be really amazing if a booking system feature existed — then I KNOW I actually have a session rather than 'maybe'."*
+
+#### 2.3 Notification Failures
+
+Сповіщення не приходять або приходять із запізненням, через що користувач пропускає свою чергу.
+
+> *"The notification alert never works and I reported it. Sometimes the advisor will be in the room the minute the text notification is sent, and even if I get there in less than 1 minute, they have already been pulled into another chat."*
+
+### 3. During Session
+
+::: {.callout-note appearance="minimal" icon=false}
+📍 Етап активної сесії з радником — найбільш чутливий до якості досвіду.
+:::
+
+#### 3.1 Technical Failures
+
+Фрізи, обриви з'єднання, автоматичний логаут посеред розмови.
+
+> *"I left the app for a moment to google the meaning of a word she had used, but as soon as I returned she was allocated to a different consultation. As we were right in the middle of a conversation, this is not great."*
+
+#### 3.2 No Credit / Time Visibility
+
+Немає таймера чи індикатора балансу під час сесії. Чат обривається раптово без попередження.
+
+> *"I hate the way the chat just abruptly interrupts the meeting without warning. There's no clock to show the balance of minutes. It just cuts you off, like holding your chat hostage unless you pony up money."*
+
+#### 3.3 Missing Chat Features
+
+Відсутність базових функцій: copy-paste, надсилання фото, голосові повідомлення, пошук по чату.
+
+> *"It's tiring to type… copy paste does not work… would be useful to share and delete pictures."*
+
+#### 3.4 Slow Advisor Responses
+
+Довгі паузи між повідомленнями радника (3–5 хвилин), кредити згоряють під час очікування відповіді.
+
+> *"I understand the advisors need to be paid. But some advisors take 3 to 5 minutes to answer, and unfortunately some won't continue their answers when the chat disconnects."*
+
+#### 3.5 Poor Reading Quality
+
+Нечіткі, загальні, не по темі або повторювані відповіді, які не дають конкретної інформації.
+
+> *"Met some advisors who weren't clear with their readings or giving very vague basic readings and not answering my questions or concerns."*
+
+#### 3.6 Language & Communication Barrier
+
+Мовний бар'єр, через який відповіді радника складно зрозуміти.
+
+> *"I think English is not the first language for some of the astrologers, which makes it difficult to understand what they mean."*
+
+### 4. Post-Session
+
+::: {.callout-note appearance="minimal" icon=false}
+📍 Етап після завершення сесії — робота з результатами та управління контактами.
+:::
+
+#### 4.1 Can't Save / Find / Download Chat
+
+Немає закладок, пошуку по старих чатах або функції експорту. Важливу інформацію з рідінгів складно знайти повторно.
+
+> *"I've always wished for an easy way to search and pin old messages. Sometimes you really need to revisit past readings, and having quicker access would make a huge difference."*
+
+#### 4.2 Can't Delete Chats
+
+Можна лише архівувати, але не видалити чати назавжди. Архівовані радники продовжують писати.
+
+> *"Why can't I completely delete chats? I can only archive them. Sometimes I talk to someone and realize I can't establish a good connection, so I don't want to receive any more messages from that person."*
+
+#### 4.3 Unwanted Messages from Advisors
+
+Небажані повідомлення від радників, з якими користувач не хоче спілкуватись. Немає функції блокування.
+
+> *"I have too many chats and psychics who keep writing to me and I am not interested. Even if they are archived they keep sending messages."*
+
+#### 4.4 Contradictory Readings
+
+Різні радники дають протилежну інформацію щодо однієї ситуації, що підриває довіру до платформи.
+
+> *"Some readings are contradictory and most predictions don't resonate with reality. With time passing I have been checking that there is no accuracy at all."*
+
+### 5. Billing & Account
+
+::: {.callout-note appearance="minimal" icon=false}
+📍 Етап управління платежами, акаунтом та особистими даними.
+:::
+
+#### 5.1 Unexpected Charges
+
+Автоматичне списання без підтвердження, використання невірної картки, некоректна сума.
+
+> *"I just bought some credits and specified the card I wanted to use, and then it bumped me up to $99.90 without my consent AGAIN and used my main account."*
+
+#### 5.2 Inflexible Payment Options
+
+Обмежений набір сум для поповнення, неможливість внести довільну суму.
+
+> *"Is there a way to refill credits with a custom amount rather than the presets? Banks don't like seeing the repeated transactions of the same amount and flag it."*
+
+#### 5.3 Subscription / Loyalty Desire
+
+Бажання передплатної моделі з фіксованою місячною оплатою замість поточної кредитної системи.
+
+> *"I have an idea: an open membership where I pay an amount throughout the month and then I can access the psychic anytime I want without charge on every chat I enter."*
+
+#### 5.4 Privacy & Data Control
+
+Неможливість видалити збережені картки, занепокоєння щодо безпеки особистих даних.
+
+> *"How do I remove my credit card details from the system? Currently, I can only add new cards."*
+
+---
+
+## Наступні кроки {.unnumbered}
+
+::: {.callout-important}
+## Рухаємось далі
+Після обрання варіанту категоризації всі записи фідбеку будуть розподілені по відповідних категоріях 
+:::
+
+
+
+: {.striped .hover}

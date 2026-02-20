@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="uk" xml:lang="uk"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Аналіз фідбеку High-Value користувачів</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Feedback_Analysis_Report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Feedback_Analysis_Report_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Feedback_Analysis_Report_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Feedback_Analysis_Report_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Feedback_Analysis_Report_files/libs/quarto-html/popper.min.js"></script>
+<script src="Feedback_Analysis_Report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Feedback_Analysis_Report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Feedback_Analysis_Report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Feedback_Analysis_Report_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Feedback_Analysis_Report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Feedback_Analysis_Report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Feedback_Analysis_Report_files/libs/bootstrap/bootstrap-2e0f758e804e54dfdcab762308f015d5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: white;
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: white;
+background: #1B3A5C;
+      }
+</style>
+<script src="Feedback_Analysis_Report_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Feedback_Analysis_Report_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="quarto-light">
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Аналіз фідбеку High-Value користувачів</h1>
+            <p class="subtitle lead">Топ-5 проблем, баг-репорт та методологія — Operations Demand Team</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Зміст</h2>
+   
+  <ul>
+  <li><a href="#огляд" id="toc-огляд" class="nav-link active" data-scroll-target="#огляд">Огляд</a></li>
+  <li><a href="#топ-5-найбільших-проблем" id="toc-топ-5-найбільших-проблем" class="nav-link" data-scroll-target="#топ-5-найбільших-проблем">Топ-5 найбільших проблем</a>
+  <ul class="collapse">
+  <li><a href="#неточні-передбачення-не-збулися" id="toc-неточні-передбачення-не-збулися" class="nav-link" data-scroll-target="#неточні-передбачення-не-збулися">1. Неточні передбачення — не збулися</a></li>
+  <li><a href="#повільні-відповіді-радників-35-хв" id="toc-повільні-відповіді-радників-35-хв" class="nav-link" data-scroll-target="#повільні-відповіді-радників-35-хв">2. Повільні відповіді радників (3–5+ хв)</a></li>
+  <li><a href="#нечіткі-загальні-розмиті-відповіді" id="toc-нечіткі-загальні-розмиті-відповіді" class="nav-link" data-scroll-target="#нечіткі-загальні-розмиті-відповіді">3. Нечіткі / загальні / розмиті відповіді</a></li>
+  <li><a href="#copy-paste-функціональність" id="toc-copy-paste-функціональність" class="nav-link" data-scroll-target="#copy-paste-функціональність">4. Copy-paste функціональність</a></li>
+  <li><a href="#невідповідні-відповіді-off-topic" id="toc-невідповідні-відповіді-off-topic" class="nav-link" data-scroll-target="#невідповідні-відповіді-off-topic">5. Невідповідні відповіді / off-topic</a></li>
+  <li><a href="#візуалізація-топ-5" id="toc-візуалізація-топ-5" class="nav-link" data-scroll-target="#візуалізація-топ-5">Візуалізація топ-5</a></li>
+  </ul></li>
+  <li><a href="#баг-репорт" id="toc-баг-репорт" class="nav-link" data-scroll-target="#баг-репорт">Баг-репорт</a></li>
+  <li><a href="#повна-картина-розподіл-усіх-ідей" id="toc-повна-картина-розподіл-усіх-ідей" class="nav-link" data-scroll-target="#повна-картина-розподіл-усіх-ідей">Повна картина: розподіл усіх ідей</a></li>
+  <li><a href="#методологія" id="toc-методологія" class="nav-link" data-scroll-target="#методологія">Методологія</a>
+  <ul class="collapse">
+  <li><a href="#дані" id="toc-дані" class="nav-link" data-scroll-target="#дані">Дані</a></li>
+  <li><a href="#процес" id="toc-процес" class="nav-link" data-scroll-target="#процес">Процес</a></li>
+  <li><a href="#інструменти" id="toc-інструменти" class="nav-link" data-scroll-target="#інструменти">Інструменти</a></li>
+  </ul></li>
+  <li><a href="#висновки" id="toc-висновки" class="nav-link" data-scroll-target="#висновки">Висновки</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Feedback_Analysis_Report.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="огляд" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="огляд">Огляд</h2>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Цей звіт підсумовує аналіз зворотного зв’язку від <strong>найбільш цінних (high-value) користувачів</strong> платформи. Основна мета — виявити <strong>топ-5 найболючіших проблем</strong> за кількістю згадувань, а також задокументувати технічні баги.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Показати код</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n_feedbacks <span class="ot">&lt;-</span> <span class="fu">nrow</span>(categorised_feedback)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n_users <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(categorised_feedback<span class="sc">$</span>user_id)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n_ideas_total <span class="ot">&lt;-</span> <span class="fu">nrow</span>(ideas)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>n_bugs_total <span class="ot">&lt;-</span> <span class="fu">nrow</span>(bugs)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>total_bug_mentions <span class="ot">&lt;-</span> <span class="fu">sum</span>(bugs<span class="sc">$</span>number_of_mentions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<table class="table-striped table-hover caption-top table">
+<caption>Загальна статистика дослідження</caption>
+<thead>
+<tr class="header">
+<th>Метрика</th>
+<th style="text-align: center;">Значення</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Фідбеків оброблено</td>
+<td style="text-align: center;"><strong>340</strong></td>
+</tr>
+<tr class="even">
+<td>Виявлено унікальних ідей/проблем</td>
+<td style="text-align: center;"><strong>62</strong></td>
+</tr>
+<tr class="odd">
+<td>Технічних багів (категорій)</td>
+<td style="text-align: center;"><strong>9</strong></td>
+</tr>
+<tr class="even">
+<td>Загальна кількість згадок багів</td>
+<td style="text-align: center;"><strong>69</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="топ-5-найбільших-проблем" class="level2">
+<h2 class="anchored" data-anchor-id="топ-5-найбільших-проблем">Топ-5 найбільших проблем</h2>
+<div class="callout callout-style-simple callout-important no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Ці п’ять проблем — найчастіше згадувані болі користувачів.</strong> Вони охоплюють якість рідінгів та UX чат-функцій і мають бути пріоритизовані першочергово.</p>
+</div>
+</div>
+</div>
+<section id="неточні-передбачення-не-збулися" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="неточні-передбачення-не-збулися">1. Неточні передбачення — не збулися</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Код:</strong> <code>2.2.a</code> · <strong>Згадок: 24</strong></p>
+</div>
+</div>
+</div>
+<p>Прогнози та передбачення не збулися — вказані дати та події не відбулися. Це — <strong>найболючіша проблема</strong> для high-value користувачів, яка безпосередньо підриває довіру до платформи.</p>
+<blockquote class="blockquote">
+<p><em>“None of the predictions worked out. I was always waiting for something to happen and when it didn’t, some story was made.”</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="повільні-відповіді-радників-35-хв" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="повільні-відповіді-радників-35-хв">2. Повільні відповіді радників (3–5+ хв)</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Код:</strong> <code>2.1.a</code> · <strong>Згадок: 23</strong></p>
+</div>
+</div>
+</div>
+<p>Радники відповідають занадто повільно — 3–5+ хвилин між повідомленнями. Користувачі відчувають, що їхні кредити горять на очікуванні, а не на фактичну консультацію.</p>
+<blockquote class="blockquote">
+<p><em>“Some of them take more than 3–4 mins to reply. Sometimes advisors don’t give direct answers and try to extend the time as much as possible.”</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="нечіткі-загальні-розмиті-відповіді" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="нечіткі-загальні-розмиті-відповіді">3. Нечіткі / загальні / розмиті відповіді</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Код:</strong> <code>2.2.c</code> · <strong>Згадок: 21</strong></p>
+</div>
+</div>
+</div>
+<p>Відповіді занадто загальні, нечіткі або “загадкові” — не дають конкретної корисної інформації. Користувачі відчувають, що отримують шаблонні фрази замість персоналізованого рідінгу.</p>
+<blockquote class="blockquote">
+<p><em>“Very vague statement over and over. Not detailed.”</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="copy-paste-функціональність" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="copy-paste-функціональність">4. Copy-paste функціональність</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Код:</strong> <code>1.2.a</code> · <strong>Згадок: 13</strong></p>
+</div>
+</div>
+</div>
+<p>Неможливо копіювати та вставляти текст у чаті — ні з інших додатків, ні всередині платформи. Особливо критично для користувачів з дислексією та іншими обмеженнями.</p>
+<blockquote class="blockquote">
+<p><em>“I got dyslexia and sometimes I write a message on my phone and want to copy and paste it and you’re not allowed to. I have to rewrite the message.”</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="невідповідні-відповіді-off-topic" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="невідповідні-відповіді-off-topic">5. Невідповідні відповіді / off-topic</h3>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Код:</strong> <code>2.1.c</code> · <strong>Згадок: 10</strong></p>
+</div>
+</div>
+</div>
+<p>Радник не відповідає на конкретне питання, відхиляється від теми або перепитує те, що вже було сказано. Користувач витрачає кредити, але не отримує відповіді на своє запитання.</p>
+<blockquote class="blockquote">
+<p><em>“Readers don’t read my intentionally clarified needs and my questions clearly at all and keep giving wrong and unreliable answers.”</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="візуалізація-топ-5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="візуалізація-топ-5">Візуалізація топ-5</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Показати код</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>top5_plot <span class="ot">&lt;-</span> top5 <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idea =</span> <span class="fu">str_wrap</span>(idea, <span class="at">width =</span> <span class="dv">35</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idea =</span> <span class="fu">fct_reorder</span>(idea, number_of_mentions))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top5_plot, <span class="fu">aes</span>(<span class="at">x =</span> number_of_mentions, <span class="at">y =</span> idea, <span class="at">fill =</span> number_of_mentions)) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> number_of_mentions), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#5DADE2"</span>, <span class="at">high =</span> <span class="st">"#1B3A5C"</span>) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Кількість згадок"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-top5" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-top5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Feedback_Analysis_Report_files/figure-html/fig-top5-1.png" class="img-fluid figure-img" width="2400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-top5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Топ-5 проблем за кількістю згадувань
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="баг-репорт" class="level2">
+<h2 class="anchored" data-anchor-id="баг-репорт">Баг-репорт</h2>
+<div class="callout callout-style-simple callout-warning no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Усі виявлені технічні баги.</strong> Впорядковані за кількістю згадок — від найкритичніших до найменш поширених.</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Показати код</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bugs_tbl <span class="ot">&lt;-</span> bugs <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_mentions)) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Код</span><span class="st">`</span> <span class="ot">=</span> code,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Баг</span><span class="st">`</span> <span class="ot">=</span> idea,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Згадок</span><span class="st">`</span> <span class="ot">=</span> number_of_mentions,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Опис</span><span class="st">`</span> <span class="ot">=</span> description</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (is_html) {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  bugs_tbl <span class="sc">|&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"l"</span>, <span class="st">"c"</span>, <span class="st">"l"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">full_width =</span> <span class="cn">TRUE</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">column_spec</span>(<span class="dv">3</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#C0392B"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  bugs_tbl <span class="sc">|&gt;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"l"</span>, <span class="st">"c"</span>, <span class="st">"l"</span>))</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-bugs" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-bugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Перелік технічних багів за кількістю згадок
+</figcaption>
+<div aria-describedby="tbl-bugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Код</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Баг</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Згадок</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Опис</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1.1.c</td>
+<td style="text-align: left;">Queue / Chat Next bugs</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">13</td>
+<td style="text-align: left;">Функція черги працює непередбачувано: неточний таймер, втрата місця, невідповідність статусів.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1.1.h</td>
+<td style="text-align: left;">Credits deducted without connection</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">13</td>
+<td style="text-align: left;">Кредити списуються, хоча з'єднання не було встановлено або обірвалось через баг.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1.1.i</td>
+<td style="text-align: left;">General / unspecified glitches</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">11</td>
+<td style="text-align: left;">Загальні технічні проблеми без конкретної деталізації.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1.1.d</td>
+<td style="text-align: left;">Message delivery failures / typing lag</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">10</td>
+<td style="text-align: left;">Повідомлення не доставляються або доставляються із затримкою 2-3 хвилини. Лаг при наборі тексту.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1.1.b</td>
+<td style="text-align: left;">Connection drops during session</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">7</td>
+<td style="text-align: left;">З'єднання обривається посеред активної розмови з радником.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1.1.a</td>
+<td style="text-align: left;">App crashes / freezes</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">6</td>
+<td style="text-align: left;">Додаток зависає, фрізиться або крашиться під час використання, що перериває сесію.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1.1.g</td>
+<td style="text-align: left;">Notification system not working</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">5</td>
+<td style="text-align: left;">Сповіщення про доступність радника не приходять або приходять із запізненням.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1.1.e</td>
+<td style="text-align: left;">Auto-logout mid-session</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">2</td>
+<td style="text-align: left;">Автоматичний вихід із сесії посеред розмови без дії користувача.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1.1.f</td>
+<td style="text-align: left;">Multi-window / app-switch closes chat</td>
+<td style="text-align: center; font-weight: bold; color: rgba(192, 57, 43, 255) !important;">2</td>
+<td style="text-align: left;">Перехід в інший додаток або мультивіконний режим закриває активний чат.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Показати код</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bugs_plot <span class="ot">&lt;-</span> bugs <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idea =</span> <span class="fu">str_wrap</span>(idea, <span class="at">width =</span> <span class="dv">30</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idea =</span> <span class="fu">fct_reorder</span>(idea, number_of_mentions))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bugs_plot, <span class="fu">aes</span>(<span class="at">x =</span> number_of_mentions, <span class="at">y =</span> idea, <span class="at">fill =</span> number_of_mentions)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> number_of_mentions), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#F5B041"</span>, <span class="at">high =</span> <span class="st">"#C0392B"</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Кількість згадок"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-bugs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Feedback_Analysis_Report_files/figure-html/fig-bugs-1.png" class="img-fluid figure-img" width="2400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bugs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Технічні баги за кількістю згадок
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Цитати користувачів по кожному багу
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<details class="code-fold">
+<summary>Показати код</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bugs <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_mentions)) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pwalk</span>(<span class="cf">function</span>(code, idea, number_of_mentions, description, best_quote) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">**{code} — {idea}** ({number_of_mentions} згадок)</span><span class="sc">\n\n</span><span class="st">"</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"&gt; *</span><span class="sc">\"</span><span class="st">{best_quote}</span><span class="sc">\"</span><span class="st">*</span><span class="sc">\n\n</span><span class="st">"</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<p><strong>1.1.c — Queue / Chat Next bugs</strong> (13 згадок) &gt; <em>“I can’t stand it when you say 4 minutes and it counts down to 1 minute. I have waited an hour after that 2 minutes before anyone came online.”</em> <strong>1.1.h — Credits deducted without connection</strong> (13 згадок) &gt; <em>“Chat had many glitches where the line up to chat for an astrologer would take funds from the account even though the chat was not connected.”</em> <strong>1.1.i — General / unspecified glitches</strong> (11 згадок) &gt; <em>“The app has a lot of technical issues and eating up credits when I wasn’t connected.”</em> <strong>1.1.d — Message delivery failures / typing lag</strong> (10 згадок) &gt; <em>“Messages getting longer to be delivered, 2-3 minutes. Tech issue interruption, unnecessary credit deductions.”</em> <strong>1.1.b — Connection drops during session</strong> (7 згадок) &gt; <em>“When the connection drops out when it’s my turn to chat and I can’t answer my advisor.”</em> <strong>1.1.a — App crashes / freezes</strong> (6 згадок) &gt; <em>“Sometimes glitches, it froze, it kicked me out of chats and the worst of all, sometimes it keeps loading and doesn’t allow me to access my chats.”</em> <strong>1.1.g — Notification system not working</strong> (5 згадок) &gt; <em>“The notification alert never works and I reported it. Sometimes the advisor will be in the room the minute the text notification is sent, and even if I get there in less than 1 minute, they have already been pulled into another chat.”</em> <strong>1.1.e — Auto-logout mid-session</strong> (2 згадок) &gt; <em>“The psychic got logged out by the app in the middle of a reading.”</em> <strong>1.1.f — Multi-window / app-switch closes chat</strong> (2 згадок) &gt; <em>“Having the app in multi window on phone and the chat closing.”</em></p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="повна-картина-розподіл-усіх-ідей" class="level2">
+<h2 class="anchored" data-anchor-id="повна-картина-розподіл-усіх-ідей">Повна картина: розподіл усіх ідей</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Показати код</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>all_plot <span class="ot">&lt;-</span> ideas <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">idea_label =</span> <span class="fu">str_wrap</span>(<span class="fu">paste0</span>(code, <span class="st">" — "</span>, idea), <span class="at">width =</span> <span class="dv">45</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">idea_label =</span> <span class="fu">fct_reorder</span>(idea_label, number_of_mentions),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">case_when</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"1</span><span class="sc">\\</span><span class="st">.1"</span>) <span class="sc">~</span> <span class="st">"Баги"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"1</span><span class="sc">\\</span><span class="st">.2"</span>) <span class="sc">~</span> <span class="st">"Feature Requests (UX)"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"1</span><span class="sc">\\</span><span class="st">.3"</span>) <span class="sc">~</span> <span class="st">"Credit/Timer System"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.1"</span>) <span class="sc">~</span> <span class="st">"Якість відповідей"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.2"</span>) <span class="sc">~</span> <span class="st">"Точність рідінгів"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.3"</span>) <span class="sc">~</span> <span class="st">"Професійність"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"2</span><span class="sc">\\</span><span class="st">.4"</span>) <span class="sc">~</span> <span class="st">"AI-підозри"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"3"</span>) <span class="sc">~</span> <span class="st">"Ціни та оплата"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_starts</span>(code, <span class="st">"4"</span>) <span class="sc">~</span> <span class="st">"Приватність та безпека"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Інше"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_plot, <span class="fu">aes</span>(<span class="at">x =</span> number_of_mentions, <span class="at">y =</span> idea_label, <span class="at">fill =</span> category)) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> number_of_mentions), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.12</span>))) <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>, <span class="at">name =</span> <span class="st">"Категорія"</span>) <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Кількість згадок"</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Set2 is 8
+Returning the palette you asked for with that many colors</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-all-ideas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-all-ideas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Feedback_Analysis_Report_files/figure-html/fig-all-ideas-1.png" class="img-fluid figure-img" width="2700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-ideas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Усі ідеї/проблеми, впорядковані за кількістю згадок
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="методологія" class="level2">
+<h2 class="anchored" data-anchor-id="методологія">Методологія</h2>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Як проводився аналіз</strong></p>
+</div>
+</div>
+</div>
+<section id="дані" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="дані">Дані</h3>
+<p>Вхідні дані складалися з трьох джерел:</p>
+<ul>
+<li><strong>Raw feedback</strong> (<code>Raw feedback - Feedbacks.csv</code>) — сирі цитати користувачів із датою, джерелом та <code>user_id</code>.</li>
+<li><strong>User status</strong> (<code>user_status.csv</code>) — статус кожного користувача: <code>active</code>, <code>dormant</code> або <code>churned</code>.</li>
+<li><strong>Idea Dictionary</strong> (<code>Idea_Dictionary.xlsx</code>) — словник кодів: опис кожної підкатегорії та найкраща цитата.</li>
+</ul>
+</section>
+<section id="процес" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="процес">Процес</h3>
+<ol type="1">
+<li><p><strong>Збір фідбеку:</strong> Зібрано цитати від high-value користувачів з різних каналів (тікети підтримки та інші джерела).</p></li>
+<li><p><strong>Категоризація:</strong> Кожен фідбек класифіковано за системою кодів (варіант B з <a href="Feedback_Categorization_Options.html">попереднього звіту</a>), результат збережено у <code>Feedback_Classified.xlsx</code>. Система кодів:</p>
+<ul>
+<li><code>1.x</code> — Продуктові питання (баги <code>1.1</code>, фічі <code>1.2</code>, кредитна система <code>1.3</code>)</li>
+<li><code>2.x</code> — Якість радників (швидкість <code>2.1</code>, точність <code>2.2</code>, професійність <code>2.3</code>, AI-підозри <code>2.4</code>)</li>
+<li><code>3.x</code> — Ціноутворення та оплата</li>
+<li><code>4.x</code> — Приватність та безпека</li>
+</ul></li>
+<li><p><strong>Об’єднання з легендою:</strong> Класифіковані фідбеки об’єднано з <code>user_status</code> та <code>Idea_Dictionary</code> через <code>left_join</code>. Категорія <code>5</code> (позитивні відгуки) відфільтрована.</p></li>
+<li><p><strong>Підрахунок згадок:</strong> Згруповано по <code>code</code> та підраховано кількість згадок. Один фідбек міг містити кілька проблем і відповідно кодувався кількома кодами.</p></li>
+<li><p><strong>Ідентифікація топ-5:</strong> Відібрано п’ять підкатегорій із найбільшою кількістю згадувань, <strong>виключивши баги</strong> (коди <code>1.1.x</code>).</p></li>
+<li><p><strong>Баг-репорт:</strong> Окремо виділено всі підкатегорії з кодом <code>1.1.x</code> (технічні баги) у баг-репорт.</p></li>
+</ol>
+</section>
+<section id="інструменти" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="інструменти">Інструменти</h3>
+<ul>
+<li><strong>R</strong> + <code>tidyverse</code> — обробка та аналіз даних</li>
+<li><strong>Quarto</strong> — генерація звіту</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="висновки" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="висновки">Висновки</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Ключові висновки
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>3 з 5 топ-проблем стосуються якості радників</strong> (неточні прогнози, повільні відповіді, розмиті відповіді), а не технічних багів. Це свідчить про те, що для high-value користувачів якість сервісу є більш болючою, ніж технічна стабільність.</p>
+<p><strong>Copy-paste</strong> — єдина продуктова фіча у топ-5, але з 13 згадками вона критична з точки зору accessibility.</p>
+<p><strong>Баги</strong> сумарно набрали <strong>69 згадок</strong> по 9 категоріях, де найбільше скарг на баги черги (<code>1.1.c</code>, 13 згадок) та списання кредитів без підключення (<code>1.1.h</code>, 13 згадок).</p>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="Feedback_Analysis_Report_files/libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

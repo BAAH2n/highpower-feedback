@@ -1,0 +1,371 @@
+---
+title: "Аналіз фідбеку High-Value користувачів"
+subtitle: "Топ-5 проблем, баг-репорт та методологія — Operations Demand Team"
+lang: uk
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    toc-title: "Зміст"
+    number-sections: false
+    smooth-scroll: true
+    mainfont: "Segoe UI"
+    fontsize: "1rem"
+    linestretch: 1.6
+    title-block-banner: "#1B3A5C"
+    title-block-banner-color: white
+    code-fold: true
+    code-summary: "Показати код"
+    df-print: kable
+  typst:
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    mainfont: "Arial"
+    fontsize: 11pt
+    margin:
+      x: 25mm
+      y: 25mm
+    code-fold: true
+knitr:
+  opts_chunk:
+    dev: ragg_png
+    dpi: 300
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(knitr)
+library(ragg)
+
+is_html <- knitr::is_html_output()
+if (is_html) library(kableExtra)
+
+# --- Завантаження даних (відповідає Main.R) ---
+categorised_feedback <- readxl::read_excel("data/Feedback_Classified.xlsx", sheet = 1) |>
+  janitor::clean_names() |>
+  mutate(
+    user_id = as.numeric(user_id),
+    date = lubridate::parse_date_time(date, orders = c("mdy_HMS", "dmy_HMS", "dmy", "mdy"))
+  )
+
+user_status <- read_csv("data/user_status.csv", show_col_types = FALSE) |>
+  select(c(1, 2, 3)) |>
+  janitor::clean_names() |>
+  filter(!is.na(meta_user_id))
+
+idea_legend <- readxl::read_excel("data/Idea_Dictionary.xlsx") |>
+  janitor::clean_names()
+
+# --- Об'єднання та підрахунок (логіка з Main.R) ---
+joined_tb <- left_join(categorised_feedback, user_status, join_by(user_id == meta_user_id))
+
+ideas <- joined_tb |>
+  filter(!str_detect(category, "5")) |>
+  select(code, date, user_id) |>
+  group_by(code) |>
+  summarise(number_of_mentions = n()) |>
+  left_join(x = _, idea_legend, join_by(code == code))
+
+top5 <- ideas |>
+  filter(!str_detect(code, "1.1")) |>
+  arrange(desc(number_of_mentions)) |>
+  head(5)
+
+bugs <- ideas |>
+  filter(str_detect(code, "1.1")) |>
+  arrange(desc(number_of_mentions))
+```
+
+## Огляд {.unnumbered}
+
+::: {.callout-note appearance="minimal"}
+Цей звіт підсумовує аналіз зворотного зв'язку від **найбільш цінних (high-value) користувачів** платформи. Основна мета — виявити **топ-5 найболючіших проблем** за кількістю згадувань, а також задокументувати технічні баги.
+:::
+
+```{r}
+#| label: overview-stats
+
+n_feedbacks <- nrow(categorised_feedback)
+n_users <- n_distinct(categorised_feedback$user_id)
+n_ideas_total <- nrow(ideas)
+n_bugs_total <- nrow(bugs)
+total_bug_mentions <- sum(bugs$number_of_mentions)
+```
+
+| Метрика | Значення |
+|---------|:--------:|
+| Фідбеків оброблено | **`r n_feedbacks`** |
+| Виявлено унікальних ідей/проблем | **`r n_ideas_total`** |
+| Технічних багів (категорій) | **`r n_bugs_total`** |
+| Загальна кількість згадок багів | **`r total_bug_mentions`** |
+
+: Загальна статистика дослідження {.striped .hover}
+
+---
+
+## Топ-5 найбільших проблем
+
+::: {.callout-important appearance="simple" icon=false}
+**Ці п'ять проблем — найчастіше згадувані болі користувачів.** Вони охоплюють якість рідінгів та UX чат-функцій і мають бути пріоритизовані першочергово.
+:::
+
+### 1. Неточні передбачення — не збулися {.unnumbered}
+
+::: {.callout-tip appearance="minimal" icon=false}
+**Код:** `2.2.a` · **Згадок: 24**
+:::
+
+Прогнози та передбачення не збулися — вказані дати та події не відбулися. Це — **найболючіша проблема** для high-value користувачів, яка безпосередньо підриває довіру до платформи.
+
+> *"None of the predictions worked out. I was always waiting for something to happen and when it didn't, some story was made."*
+
+---
+
+### 2. Повільні відповіді радників (3–5+ хв) {.unnumbered}
+
+::: {.callout-tip appearance="minimal" icon=false}
+**Код:** `2.1.a` · **Згадок: 23**
+:::
+
+Радники відповідають занадто повільно — 3–5+ хвилин між повідомленнями. Користувачі відчувають, що їхні кредити горять на очікуванні, а не на фактичну консультацію.
+
+> *"Some of them take more than 3–4 mins to reply. Sometimes advisors don't give direct answers and try to extend the time as much as possible."*
+
+---
+
+### 3. Нечіткі / загальні / розмиті відповіді {.unnumbered}
+
+::: {.callout-tip appearance="minimal" icon=false}
+**Код:** `2.2.c` · **Згадок: 21**
+:::
+
+Відповіді занадто загальні, нечіткі або "загадкові" — не дають конкретної корисної інформації. Користувачі відчувають, що отримують шаблонні фрази замість персоналізованого рідінгу.
+
+> *"Very vague statement over and over. Not detailed."*
+
+---
+
+### 4. Copy-paste функціональність {.unnumbered}
+
+::: {.callout-tip appearance="minimal" icon=false}
+**Код:** `1.2.a` · **Згадок: 13**
+:::
+
+Неможливо копіювати та вставляти текст у чаті — ні з інших додатків, ні всередині платформи. Особливо критично для користувачів з дислексією та іншими обмеженнями.
+
+> *"I got dyslexia and sometimes I write a message on my phone and want to copy and paste it and you're not allowed to. I have to rewrite the message."*
+
+---
+
+### 5. Невідповідні відповіді / off-topic {.unnumbered}
+
+::: {.callout-tip appearance="minimal" icon=false}
+**Код:** `2.1.c` · **Згадок: 10**
+:::
+
+Радник не відповідає на конкретне питання, відхиляється від теми або перепитує те, що вже було сказано. Користувач витрачає кредити, але не отримує відповіді на своє запитання.
+
+> *"Readers don't read my intentionally clarified needs and my questions clearly at all and keep giving wrong and unreliable answers."*
+
+---
+
+### Візуалізація топ-5 {.unnumbered}
+
+```{r}
+#| label: fig-top5
+#| fig-cap: "Топ-5 проблем за кількістю згадувань"
+#| fig-height: 4.5
+#| fig-width: 8
+
+top5_plot <- top5 |>
+  mutate(idea = str_wrap(idea, width = 35)) |>
+  mutate(idea = fct_reorder(idea, number_of_mentions))
+
+ggplot(top5_plot, aes(x = number_of_mentions, y = idea, fill = number_of_mentions)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = number_of_mentions), hjust = -0.3, fontface = "bold", size = 4) +
+  scale_fill_gradient(low = "#5DADE2", high = "#1B3A5C") +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(x = "Кількість згадок", y = NULL) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+---
+
+## Баг-репорт
+
+::: {.callout-warning appearance="simple" icon=false}
+**Усі виявлені технічні баги.** Впорядковані за кількістю згадок — від найкритичніших до найменш поширених.
+:::
+
+```{r}
+#| label: tbl-bugs
+#| tbl-cap: "Перелік технічних багів за кількістю згадок"
+
+bugs_tbl <- bugs |>
+  arrange(desc(number_of_mentions)) |>
+  select(
+    `Код` = code,
+    `Баг` = idea,
+    `Згадок` = number_of_mentions,
+    `Опис` = description
+  )
+
+if (is_html) {
+  bugs_tbl |>
+    kable(align = c("c", "l", "c", "l")) |>
+    kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"),
+      full_width = TRUE
+    ) |>
+    column_spec(3, bold = TRUE, color = "#C0392B")
+} else {
+  bugs_tbl |>
+    kable(align = c("c", "l", "c", "l"))
+}
+```
+
+```{r}
+#| label: fig-bugs
+#| fig-cap: "Технічні баги за кількістю згадок"
+#| fig-height: 5
+#| fig-width: 8
+
+bugs_plot <- bugs |>
+  mutate(idea = str_wrap(idea, width = 30)) |>
+  mutate(idea = fct_reorder(idea, number_of_mentions))
+
+ggplot(bugs_plot, aes(x = number_of_mentions, y = idea, fill = number_of_mentions)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = number_of_mentions), hjust = -0.3, fontface = "bold", size = 3.5) +
+  scale_fill_gradient(low = "#F5B041", high = "#C0392B") +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(x = "Кількість згадок", y = NULL) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+```
+
+::: {.callout-note collapse="true"}
+## Цитати користувачів по кожному багу
+
+```{r}
+#| label: bug-quotes
+#| results: asis
+
+bugs |>
+  arrange(desc(number_of_mentions)) |>
+  pwalk(function(code, idea, number_of_mentions, description, best_quote) {
+    cat(glue::glue("\n**{code} — {idea}** ({number_of_mentions} згадок)\n\n"))
+    cat(glue::glue("> *\"{best_quote}\"*\n\n"))
+  })
+```
+:::
+
+---
+
+## Повна картина: розподіл усіх ідей
+
+```{r}
+#| label: fig-all-ideas
+#| fig-cap: "Усі ідеї/проблеми, впорядковані за кількістю згадок"
+#| fig-height: 14
+#| fig-width: 9
+
+all_plot <- ideas |>
+  mutate(
+    idea_label = str_wrap(paste0(code, " — ", idea), width = 45),
+    idea_label = fct_reorder(idea_label, number_of_mentions),
+    category = case_when(
+      str_starts(code, "1\\.1") ~ "Баги",
+      str_starts(code, "1\\.2") ~ "Feature Requests (UX)",
+      str_starts(code, "1\\.3") ~ "Credit/Timer System",
+      str_starts(code, "2\\.1") ~ "Якість відповідей",
+      str_starts(code, "2\\.2") ~ "Точність рідінгів",
+      str_starts(code, "2\\.3") ~ "Професійність",
+      str_starts(code, "2\\.4") ~ "AI-підозри",
+      str_starts(code, "3") ~ "Ціни та оплата",
+      str_starts(code, "4") ~ "Приватність та безпека",
+      TRUE ~ "Інше"
+    )
+  )
+
+ggplot(all_plot, aes(x = number_of_mentions, y = idea_label, fill = category)) +
+  geom_col() +
+  geom_text(aes(label = number_of_mentions), hjust = -0.2, size = 3) +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.12))) +
+  scale_fill_brewer(palette = "Set2", name = "Категорія") +
+  labs(x = "Кількість згадок", y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "top",
+    legend.title = element_text(face = "bold")
+  )
+```
+
+---
+
+## Методологія
+
+::: {.callout-note appearance="simple" icon=false}
+**Як проводився аналіз**
+:::
+
+### Дані {.unnumbered}
+
+Вхідні дані складалися з трьох джерел:
+
+- **Raw feedback** (`Raw feedback - Feedbacks.csv`) — сирі цитати користувачів із датою, джерелом та `user_id`.
+- **User status** (`user_status.csv`) — статус кожного користувача: `active`, `dormant` або `churned`.
+- **Idea Dictionary** (`Idea_Dictionary.xlsx`) — словник кодів: опис кожної підкатегорії та найкраща цитата.
+
+### Процес {.unnumbered}
+
+1. **Збір фідбеку:** Зібрано цитати від high-value користувачів з різних каналів (тікети підтримки та інші джерела).
+
+2. **Категоризація:** Кожен фідбек класифіковано за системою кодів (варіант B з [попереднього звіту](Feedback_Categorization_Options.html)), результат збережено у `Feedback_Classified.xlsx`. Система кодів:
+   - `1.x` — Продуктові питання (баги `1.1`, фічі `1.2`, кредитна система `1.3`)
+   - `2.x` — Якість радників (швидкість `2.1`, точність `2.2`, професійність `2.3`, AI-підозри `2.4`)
+   - `3.x` — Ціноутворення та оплата
+   - `4.x` — Приватність та безпека
+
+3. **Об'єднання з легендою:** Класифіковані фідбеки об'єднано з `user_status` та `Idea_Dictionary` через `left_join`. Категорія `5` (позитивні відгуки) відфільтрована.
+
+4. **Підрахунок згадок:** Згруповано по `code` та підраховано кількість згадок. Один фідбек міг містити кілька проблем і відповідно кодувався кількома кодами.
+
+5. **Ідентифікація топ-5:** Відібрано п'ять підкатегорій із найбільшою кількістю згадувань, **виключивши баги** (коди `1.1.x`).
+
+6. **Баг-репорт:** Окремо виділено всі підкатегорії з кодом `1.1.x` (технічні баги) у баг-репорт.
+
+### Інструменти {.unnumbered}
+
+- **R** + `tidyverse` — обробка та аналіз даних
+- **Quarto** — генерація звіту
+
+---
+
+## Висновки {.unnumbered}
+
+::: {.callout-important}
+## Ключові висновки
+
+**3 з 5 топ-проблем стосуються якості радників** (неточні прогнози, повільні відповіді, розмиті відповіді), а не технічних багів. Це свідчить про те, що для high-value користувачів якість сервісу є більш болючою, ніж технічна стабільність.
+
+**Copy-paste** — єдина продуктова фіча у топ-5, але з 13 згадками вона критична з точки зору accessibility.
+
+**Баги** сумарно набрали **`r total_bug_mentions` згадок** по `r n_bugs_total` категоріях, де найбільше скарг на баги черги (`1.1.c`, 13 згадок) та списання кредитів без підключення (`1.1.h`, 13 згадок).
+:::
